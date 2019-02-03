@@ -621,13 +621,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             
             if (curKeyNode == null) {
                 curKeyNode = keyNode(lo);
-                return curKeyNode.key;
-            }
-
-            if (curKeyNode.right != null)
+            } 
+            else if (curKeyNode.right != null) {
                 curKeyNode = min(curKeyNode.right);
-            else 
+            }
+            else {
                 curKeyNode = lastWentLeft(root);
+            }
 
             return curKeyNode.key;
         }
