@@ -168,7 +168,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return get(key) != null;
     }
 
-    // it is guaranteed that key exists in bst
+    // My method for iterator class.
+    // It is guaranteed that key exists in bst.
     private Node keyNode(Key key) {
         int cmp;
         Node x = root;
@@ -592,7 +593,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
 
-    // my method
+   /***************************************************************************
+    *  My class for advanced key iterator implementation.
+    ***************************************************************************/
     public class myIterator implements Iterator<Key> {
         private Key lo, cur, hi;
         private Node curKeyNode;
@@ -655,6 +658,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
  
         }
     }
+   /***************************************************************************
+    *  End of my class.
+    ***************************************************************************/
 
     public Iterator<Key> myKeys(Key lo, Key hi) {
         return new myIterator(lo, hi);
