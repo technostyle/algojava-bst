@@ -30,6 +30,7 @@
 package algojava;
 
 import java.util.NoSuchElementException;
+import java.util.Iterator;
 
 /**
  *  The {@code BST} class represents an ordered symbol table of generic
@@ -73,6 +74,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private static final boolean BLACK = false;
 
     private Node root;     // root of the BST
+    private Node iterator;
 
     // BST helper node data type
     private class Node {
@@ -574,6 +576,93 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     public Iterable<Key> keys() {
         if (isEmpty()) return new Queue<Key>();
         return keys(min(), max());
+    }
+
+
+    // my method
+    public class myIterator implements Iterator<Key> {
+        private Key lo, cur, hi;
+        private Node curKeyNode;
+
+        public myIterator(Key lo, Key hi) {
+            this.lo = ceiling(lo);
+            this.hi = floor(hi);
+            this.cur = this.lo;
+            this.curKeyNode = null;
+        }
+
+        public boolean hasNext() {
+            int cmphi = cur.compareTo(hi);
+            if (cmphi < 0) return true;
+            else           return false;
+        }
+ 
+        public Key next() {
+            if (hasNext()) cur = next(root);
+            else           cur = null;
+            
+            return cur;
+        } 
+
+        private Key next(Node x) {
+            
+            if (curKeyNode == null) {
+                int cmp;
+                do {
+                    cmp = this.lo.compareTo(x.key);
+                    if      (cmp < 0) x = x.left;
+                    else if (cmp > 0) x = x.right;
+                } while (cmp != 0);
+
+                curKeyNode = x;
+                return x.key;
+            }
+
+            if (curKeyNode.right != null)
+                curKeyNode = min(curKeyNode.right);
+            else 
+                curKeyNode = lastWentLeft(root);
+
+            return curKeyNode.key;
+        }
+
+        // assuming x is not empty
+        // and this has next
+        private Node lastWentLeft(Node x) {
+            // as far as this has next
+            // lastLeft node exists 
+            Node lastWentLeft = x;
+
+            // System.out.printf("i am in lastWentLeft\n");
+
+            // while (x != null && x.key.compareTo(cur) != 0) {
+            while (x.key.compareTo(cur) != 0) {
+
+                // StdOut.println(x.key);
+                int cmp = x.key.compareTo(cur);
+                if (cmp > 0) {
+                    lastWentLeft = x;
+                    x = x.left;
+                } else if (cmp < 0) {
+                    x = x.right;
+                }
+            }
+
+            return lastWentLeft;
+        }
+
+        // assuming x is not empty
+        private Key lowestKey(Node x) {
+            while (x.left != null) {
+                x = x.left;
+            }
+
+            return x.key;
+        }
+    }
+
+    public Iterator<Key> myKeys(Key lo, Key hi) {
+        return new myIterator(lo, hi);
     }
 
     /**
