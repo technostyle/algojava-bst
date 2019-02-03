@@ -626,7 +626,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
                 curKeyNode = min(curKeyNode.right);
             }
             else {
-                curKeyNode = lastWentLeft(root);
+                curKeyNode = lastWentLeft();
             }
 
             return curKeyNode.key;
@@ -634,25 +634,22 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
         // assuming x is not empty
         // and this has next
-        private Node lastWentLeft(Node x) {
+        private Node lastWentLeft() {
             // as far as this has next
-            // lastLeft node exists 
-            Node lastWentLeft = x;
+            // lastWentLeft node exists 
+            Node lastWentLeft = root;
+            Node x = root;
+            int cmp;
 
-            // System.out.printf("i am in lastWentLeft\n");
-
-            // while (x != null && x.key.compareTo(cur) != 0) {
-            while (x.key.compareTo(cur) != 0) {
-
-                // StdOut.println(x.key);
-                int cmp = x.key.compareTo(cur);
+            do {
+                cmp = x.key.compareTo(cur);
                 if (cmp > 0) {
                     lastWentLeft = x;
                     x = x.left;
                 } else if (cmp < 0) {
                     x = x.right;
                 }
-            }
+            } while (cmp != 0);
 
             return lastWentLeft;
         }

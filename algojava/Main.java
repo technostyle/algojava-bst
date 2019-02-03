@@ -10,7 +10,7 @@ public class Main {
         Iterator<String> it = st.myKeys(start, end);
 
         System.out.printf(
-            "Searching keys from start: %s to end: %s\n", 
+            "Searching keys from: %s to: %s\n", 
             start, end
         );
 
