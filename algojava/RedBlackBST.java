@@ -130,7 +130,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return root == null;
     }
 
-
    /***************************************************************************
     *  Standard BST search.
     ***************************************************************************/
@@ -167,6 +166,20 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      */
     public boolean contains(Key key) {
         return get(key) != null;
+    }
+
+    // it is guaranteed that key exists in bst
+    private Node keyNode(Key key) {
+        int cmp;
+        Node x = root;
+
+        do {
+            cmp = key.compareTo(x.key);
+            if      (cmp < 0) x = x.left;
+            else if (cmp > 0) x = x.right;
+        } while (cmp != 0);
+
+        return x;
     }
 
    /***************************************************************************
@@ -607,15 +620,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         private Key next(Node x) {
             
             if (curKeyNode == null) {
-                int cmp;
-                do {
-                    cmp = this.lo.compareTo(x.key);
-                    if      (cmp < 0) x = x.left;
-                    else if (cmp > 0) x = x.right;
-                } while (cmp != 0);
-
-                curKeyNode = x;
-                return x.key;
+                curKeyNode = keyNode(lo);
+                return curKeyNode.key;
             }
 
             if (curKeyNode.right != null)
