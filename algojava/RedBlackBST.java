@@ -632,11 +632,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             return curKeyNode.key;
         }
 
-        // assuming x is not empty
-        // and this has next
         private Node lastWentLeft() {
-            // as far as this has next
-            // lastWentLeft node exists 
             Node lastWentLeft = root;
             Node x = root;
             int cmp;
@@ -654,13 +650,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             return lastWentLeft;
         }
 
-        // assuming x is not empty
-        private Key lowestKey(Node x) {
-            while (x.left != null) {
-                x = x.left;
-            }
-
-            return x.key;
+        @Override
+        public void remove() {
+ 
         }
     }
 
