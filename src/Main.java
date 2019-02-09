@@ -17,7 +17,6 @@ public class Main {
             StdOut.println(s + " " + st.get(s));
         StdOut.println();
 
-        // Queue<String> keys = new Queue<String>();
         Iterable<String> keys = st.keys("A", "X");
         StdOut.println(keys);
     }
